@@ -5,7 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=BIG5">
 <title>Insert title here</title>
-Hello Web Project
+Hello Web Project <br />
+這是最原始的 Web Project，裡面什麼都沒有　<br />
+獨立成一隻　branch，目的是要看出與後續修改的差異　<br />
 </head>
 <body>
 
