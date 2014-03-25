@@ -27,6 +27,15 @@
     		<result>/locale/HelloLocale.jsp</result>
 		</action>
 		
+		<!-- 有個現象是如果 namespace="" result 導向的頁面是 /sitemesh 開頭， 
+		那麼在網誌列打 http://localhost:8080/WebProject/HelloSiteMesh.action 會沒辦法套用到連結的 css 檔案
+		但是打 http://localhost:8080/WebProject/sitemesh/HelloSiteMesh.action 就可以套用到，這是否意味著
+		要養成如果 result 頁面是 /sitemesh 開頭，就獨立開一個 namespace 是 /sitemesh 的 package 比較好
+		-->
+		<action name="HelloSiteMesh">
+    		<result>/sitemesh/HelloSiteMesh.jsp</result>
+		</action>
+		
 	</package>
 	
 	<package name="angus" extends="struts-default" namespace="/angus">

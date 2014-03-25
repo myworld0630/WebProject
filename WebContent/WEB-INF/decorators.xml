@@ -1,0 +1,14 @@
+<!-- 表示 decorator 的公版模板資訊是放在 /sitemesh 資料夾中 -->
+<decorators defaultdir="/sitemesh">
+    
+    <!-- 不套用公版的頁面寫在 excludes 標籤裡面 -->
+    <excludes>
+        <pattern>/index.jsp</pattern>
+    </excludes>
+
+	<!-- 表示 /sitemesh/layout.jsp 就是要套用的 sitemesh 的公版 -->
+    <decorator  name="layout" page="/sitemesh/layout.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+    
+</decorators>
