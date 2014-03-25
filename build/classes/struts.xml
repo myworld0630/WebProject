@@ -7,7 +7,6 @@
 
 <struts>
 	
-	
 	<!-- 
 		1. 如果 namespace 不一樣，package name 一樣，則 initial 的時候就會出現錯誤，所以表示不同的 namespace 會對應到不同的 package name
 	    2. action class=".." 的部份需要對應到src底下的java檔  method=".." 則是java檔裡的函式名稱
@@ -19,9 +18,15 @@
 	 -->
 	
 	<package name="default" extends="struts-default" namespace="">
+		
 		<action name="index" class="web.struts.IndexAction" method="index"> 
 			<result name="success">index.jsp</result>
 		</action>
+		
+		<action name="HelloLocale">
+    		<result>/locale/HelloLocale.jsp</result>
+		</action>
+		
 	</package>
 	
 	<package name="angus" extends="struts-default" namespace="/angus">
@@ -31,5 +36,5 @@
 			<!-- <result name="success">/angus/index.jsp</result> -->
 		</action>
 	</package>
-
+	
 </struts>
