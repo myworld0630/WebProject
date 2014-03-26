@@ -8,6 +8,7 @@
 <title></title>
 </head>
 <body>
+	[SiteMesh 2014/3/25 筆記]	<br /><br />
 	這是 sitemesh 測試頁面 ，補件 sitemesh 的步驟如下<br />
 	1. 除原本必須的 struts jar 檔外，需在 lib 中引入 (1)struts2-sitemesh-plugin-2.2.3.1.jar 及(2)sitemesh-2.4.2.jar <br /><br />
 	2. 修改 /WEB-INF/web.xml 加入 (1)struts-cleanup 及 (2) sitemesh 兩個過濾器	<br />
@@ -24,8 +25,13 @@
 	   (f) skin.css : layout 所套用的 css 檔案	<br /><br />
 	5. 將這段網址貼到網址列即可測試 : http://localhost:8080/WebProject/HelloSiteMesh.action	<br />
 	         並比較與 http://localhost:8080/WebProject/sitemesh/HelloSiteMesh.action 結果的差異<br /><br />
-	6. 為了達成以上測試的目的，所以需要修改 struts.xml 的內容，加入查詢 HelloSiteMesh 的 struts 相關設定
-	
+	6. 為了達成以上測試的目的，所以需要修改 struts.xml 的內容，加入查詢 HelloSiteMesh 的 struts 相關設定<br />
+	--------------------------------------------------------------------------------------------------------------------------------------<br />
+	[SiteMesh 2014/3/26 筆記]	<br /><br />
+	為了解決無法正確存取 CSS 檔案路徑的問題(就是 3/25 筆記的第五點)，將 /sitemesh/layout.jsp 中存取路徑的寫法改成下面的寫法:	<br />
+	href="$ {pageContext.request.contextPath}/sitemesh/skin.css" <br />
+	原本有問題的寫法是: <br />
+	href="/sitemesh/skin.css"
 </body>
 
 </html>

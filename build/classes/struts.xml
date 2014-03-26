@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>
+	
+	<!-- 
+		1. 如果 namespace 不一樣，package name 一樣，則 initial 的時候就會出現錯誤，所以表示不同的 namespace 會對應到不同的 package name
+	    2. action class=".." 的部份需要對應到src底下的java檔  method=".." 則是java檔裡的函式名稱
+		3. 如果今天的路徑是 : http://localhost:4321/WebProject/angus/index.jsp
+			- WebProject 就是專案的名稱
+			- angus 就是 namespace
+			- 假如 /angus/index.jsp 中有個呼叫 action 的動作，因為現在 namespace 是在 /angus 下，
+			        所以在找對應的 action 時，就會從 package 中 namespace 叫做 /angus 的範圍底下先找
+	 -->
+	
+	<package name="default" extends="struts-default" namespace="">
+		
+		<action name="index" class="web.struts.IndexAction" method="index"> 
+			<result name="success">index.jsp</result>
+		</action>
+		
+		<action name="HelloLocale">
+    		<result>/locale/HelloLocale.jsp</result>
+		</action>
+		
+		<!-- 有個現象是如果 namespace="" result 導向的頁面是 /sitemesh 開頭， 
+		那麼在網誌列打 http://localhost:8080/WebProject/HelloSiteMesh.action 會沒辦法套用到連結的 css 檔案
+		但是打 http://localhost:8080/WebProject/sitemesh/HelloSiteMesh.action 就可以套用到，這是否意味著
+		要養成如果 result 頁面是 /sitemesh 開頭，就獨立開一個 namespace 是 /sitemesh 的 package 比較好
+		-->
+		<action name="HelloSiteMesh">
+    		<result>/sitemesh/HelloSiteMesh.jsp</result>
+		</action>
+		
+	</package>
+	
+	<package name="angus" extends="struts-default" namespace="/angus">
+		<action name="index" class="web.struts.IndexAction" method="index">
+			<result name="success">index.jsp</result>
+			<!-- 也可以使用下面的寫法，開頭有 / 就表示是絕對路徑，上面的寫法是相對路徑，表示 index.jsp 在 angus 資料夾中 -->
+			<!-- <result name="success">/angus/index.jsp</result> -->
+		</action>
+	</package>
+	
+</struts>
