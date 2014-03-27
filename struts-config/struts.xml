@@ -102,6 +102,10 @@
             </result>
 		</action>
 		
+		<action name="chart" class="web.struts.chartdirector.HelloChartDirector" method="execute">
+			<result name="success">index.jsp</result>
+		</action>
+		
 	</package>
 	
 	<package name="angus" extends="struts-default" namespace="/angus">

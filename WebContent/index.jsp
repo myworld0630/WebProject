@@ -7,17 +7,22 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Hello Struts</title>
 	
-	<!-- 引入 jquery -->
-	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<!-- 導入 jquery -->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/cdjcv.js"></script>
 	<script language="javascript">
 		
+		$(function(){
+			trackLineEventInit();
+		});
+	
 		// function query 單純用來測試第一個 Struts 範例
 		function query(){
 	
 			$("#form0").attr("action","index.action").submit();
 		}
 		
-		//function queryReport 用來測試 Jasper Report
+		//function queryReport 用來測試 Jasper Report 以及 ChartDirector
 		function queryReport(actionType){
 			
 			if(actionType =="query")
@@ -26,8 +31,65 @@
 				$("#form0").attr("action", "excel.action").submit();
 			else if(actionType =="pdf")
 				$("#form0").attr("action", "pdf.action").submit();
+			else if(actionType =="chart")
+				$("#form1").attr("action", "chart.action").submit();
 		}		
 		
+		function trackLineEventInit(){
+			console.log("trackLineEventInit 1");
+			JsChartViewer.addEventListener(window, 'load', function() {
+				var viewer = JsChartViewer.get('chart1');
+				if(viewer != null){
+					console.log("trackLineEventInit 2");
+					viewer.attachHandler("MouseMovePlotArea", function(e) {
+				        trackLineLabel(viewer, viewer.getPlotAreaMouseX());
+				        viewer.setAutoHide("all", "MouseOutPlotArea");
+				    });
+				}
+			});
+		}
+		
+		function trackLineLabel(viewer, mouseX) {
+			// Remove all previously drawn tracking object
+			viewer.hideObj("all");
+
+			// The chart and its plot area
+			var c = viewer.getChart();
+			var plotArea = c.getPlotArea();
+
+			// Get the data x-value that is nearest to the mouse, and find its pixel coordinate.
+			var xValue = c.getNearestXValue(mouseX);
+			var xCoor = c.getXCoor(xValue);
+			
+			// Draw a vertical track line at the x-position
+			viewer.drawVLine("trackLine", xCoor, plotArea.getTopY(), plotArea.getBottomY(), "black 1px solid");
+
+			//Draw a label on the x-axis to show the track line position
+			//viewer.showTextBox("xAxisLabel", xCoor, plotArea.getBottomY() + 4, JsChartViewer.Top, c.xAxis().getFormattedLabel(xValue, ""),"font:bold 11px Arial;color:#FFFFFF;background-color:#000000;padding:0px 3px");
+			
+			// Iterate through all layers to draw the data labels
+			for ( var i = 0; i < c.getLayerCount(); ++i) {
+				var layer = c.getLayerByZ(i);
+
+				// The data array index of the x-value
+				var xIndex = layer.getXIndexOf(xValue);
+
+				// Iterate through all the data sets in the layer
+				for ( var j = 0; j < layer.getDataSetCount(); ++j) {
+					var dataSet = layer.getDataSetByZ(j);
+
+					// Get the color and position of the data label
+					var color = dataSet.getDataColor();
+					var yCoor = c.getYCoor(dataSet.getPosition(xIndex), dataSet.getUseYAxis());
+					// Draw a track dot with a label next to it for visible data points in the plot area
+					if ((yCoor != null) && (yCoor >= plotArea.getTopY()) && (yCoor <= plotArea.getBottomY()) && (color != null)) {
+						viewer.showTextBox("dataPoint" + i + "_" + j, xCoor, yCoor, JsChartViewer.Center, viewer.htmlRect(7, 7, color));
+						viewer.showTextBox("dataLabel" + i + "_" + j, xCoor + 5, yCoor, JsChartViewer.Left, dataSet.getValue(xIndex).toFixed(2),
+								"padding:0px 3px;font:bold 10px Arial;background-color:" + color + ";color:#FFFFFF");
+					}
+				}
+			}
+		}
 	</script>
 </head>
 <body>
@@ -119,6 +181,32 @@
 		<input type="button" value="EXCEL" onclick="queryReport('excel')"   class="input_button">
 		<input type="button" value="PDF"   onclick="queryReport('pdf')"     class="input_button">
 		
+	</fieldset>
+	</form>
+	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />
+	下面的範例是用來測試 ChartDirector 報表的設定 <br /><br />
+	1. ChartDirector 與 struts 較無關聯，只要導入 ChartDirector.jar 檔即可使用 <br />
+	2. 在 WebContent 底下加入 getchart.jsp	<br />
+	3. 有了以上兩個檔案就可以在網頁上產生圖檔，為了能夠進一步在前端對圖表進行操作，在 WebContent/js 下加入  cdjcv.js 檔案	<br />
+	4. 在 src 資料夾底下建立 web.struts.chartdirector Package， 並在裡面建立處理圖表 ChartDirector Action 所對應的 HelloChartDirector.java Class	<br />
+	        為了方便產生圖檔，導入 ReportUtil.java，ReportUtil 依賴 StringUtil.java，故一併導入StringUtil.java<br />
+	5. 在 HelloChartDirector.java 中透過下列三個步驟，即可製作一張圖片:
+	   (1)透過  ReportUtil 產生一張 ChartDirector 圖片物件
+	   (2)透過 WebChartViewer 物件，設定圖片路徑及圖片類型等資訊
+	   (3)將 WebChartViewer 物件透過 renderHTML 方法轉換成 String 物件，前端透過 &lt;s:property value="angusRenderTest" escapeHtml="false" /&gt; 取得字串物件即可呈現  <br />
+	                後端 angusRenderTest 字串物件對應前端 struts property value <br />
+	6. 修改 struts.xml，建立 HelloChartDirector Action，並完成相關設定，在 index.jsp 中建立一個按鈕，透過此按鈕 Demo HelloChartDirector
+	7. 在前端建立 trackLineEventInit() 及 trackLineLabel() Jquery 方法，即可在圖表上產生 cursor	<br /><br />
+	
+	<form name="form1" id="form1" method="post">
+	
+	<fieldset class="fieldset_container">
+		<s:if test="#request.imgHTML!=null" >
+			<s:property value="imgHTML" escapeHtml="false" /> <!-- 加 escapeHtml="false" 圖才會出現-->
+		</s:if>
+		
+		<br />
+		<input type="button" value="圖表"  onclick="queryReport('chart')" class="input_button">
 	</fieldset>
 	</form>
 	

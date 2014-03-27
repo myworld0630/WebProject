@@ -15,6 +15,15 @@
 			- angus 就是 namespace
 			- 假如 /angus/index.jsp 中有個呼叫 action 的動作，因為現在 namespace 是在 /angus 下，
 			        所以在找對應的 action 時，就會從 package 中 namespace 叫做 /angus 的範圍底下先找
+		4. struts package 裡的元素必須按照一定的順序排列，這個順序是:
+			-result-types
+			-interceptors
+			-default-interceptor-ref
+			-default-action-ref
+			-default-class-ref
+			-global-results
+			-global-exception-mappings
+			-action*(就是所有的action放到最後)
 	 -->
 	
 	<package name="default" extends="struts-default" namespace="">
@@ -23,6 +32,16 @@
 		<result-types>
         	<result-type name="jasper" class="org.apache.struts2.views.jasperreports.JasperReportsResult" />
     	</result-types>
+		
+		<!-- default-action-ref 它的意思是說，如果你指定的Action沒有找到，則轉而調用該標籤定義的action，在這個例子里，就是test.action，這個標籤跟 redirect 沒有關係   -->
+		<default-action-ref name="test" />
+		
+		<action name="test"> 
+			<result type="redirectAction">
+            	<param name="namespace">/</param>
+            	<param name="actionName">index</param>
+        	</result>
+		</action>
 		
 		<action name="index" class="web.struts.IndexAction" method="index"> 
 			<result name="success">index.jsp</result>
@@ -81,6 +100,10 @@
             	<param name="contentType">application/pdf</param>
             	<param name="contentDisposition">attachment;filename="test.pdf"</param>
             </result>
+		</action>
+		
+		<action name="chart" class="web.struts.chartdirector.HelloChartDirector" method="execute">
+			<result name="success">index.jsp</result>
 		</action>
 		
 	</package>
