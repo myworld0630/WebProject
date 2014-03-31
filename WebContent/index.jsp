@@ -22,6 +22,12 @@
 			$("#form0").attr("action","index.action").submit();
 		}
 		
+		// function transfer  頁面跳轉帶參數範例
+		function middleware(){
+	
+			$("#form0").attr("action","middleware.action").submit();
+		}
+		
 		//function queryReport 用來測試 Jasper Report 以及 ChartDirector
 		function queryReport(actionType){
 			
@@ -106,10 +112,13 @@
 	javassist-3.11.0.GA.jar<br />
 	ognl-3.0.1.jar<br />
 	struts2-core-2.2.3.1.jar<br />
-	xwork-core-2.2.3.1.jar<br />
+	xwork-core-2.2.3.1.jar<br /><br />
 	<form id="form0" name="form0" method="POST">
+		<s:select list="{'hello angus','hello alex'}" theme="simple" name="value1"></s:select> <!-- select name 傳到後端可以 -->
+		<s:set name="value2" value='hello'/> <!-- select name 卻不行，詭異 -->
 	</form>
 	<input type="button" value="Test" onclick="query()" class="input_button"><br />
+	<input type="button" value="網頁及Action參數傳遞測試" onclick="middleware()" class="input_button"><br />
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />
 	下列的範例是用來測試 struts 後端多國語系的設定，在專案中加入下列檔案: <br /><br />
 	1. 在 Java src 資料夾建立 web.struts.multilanguage Package，並在裡面建立 Locales Bean 物件，此物件回傳可供設定的語系 <br />
@@ -204,12 +213,10 @@
 		<s:if test="#request.imgHTML!=null" >
 			<s:property value="imgHTML" escapeHtml="false" /> <!-- 加 escapeHtml="false" 圖才會出現-->
 		</s:if>
-		
 		<br />
 		<input type="button" value="圖表"  onclick="queryReport('chart')" class="input_button">
 	</fieldset>
 	</form>
-	
 	
 </body>
 </html>

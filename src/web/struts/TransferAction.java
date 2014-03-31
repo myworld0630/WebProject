@@ -2,17 +2,19 @@ package web.struts;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class IndexAction extends ActionSupport{
-
+public class TransferAction extends ActionSupport{
+    
 	private String value1;
 	private String value2;
 	
-    public String index() {
-
-    	System.out.println("Test Struts Action Success " + value1 + " " + value2);
+	public String index() {
+    	
+    	System.out.println("Test Struts Transger Action Success");
+    	System.out.println(value1);
+    	System.out.println(value2);
         return SUCCESS;
     }
-
+	
 	public String getValue1() {
 		return value1;
 	}
@@ -28,5 +30,4 @@ public class IndexAction extends ActionSupport{
 	public void setValue2(String value2) {
 		this.value2 = value2;
 	}
-
 } 
