@@ -7,6 +7,8 @@
 
 <struts>
 	
+	<constant name="struts.objectFactory" value="spring"/>
+	
 	<!-- 
 		1. 如果 namespace 不一樣，package name 一樣，則 initial 的時候就會出現錯誤，所以表示不同的 namespace 會對應到不同的 package name
 	    2. action class=".." 的部份需要對應到src底下的java檔  method=".." 則是java檔裡的函式名稱
@@ -66,6 +68,11 @@
 		<action name="transfer" class="web.struts.TransferAction" method="index">
 			<result name="success">transfer.jsp</result>
 		</action>
+		
+		<action name="login" class="web.struts.login.LoginAction" method="execute">
+            <result name="success">/login/welcome.jsp</result>
+            <result name="error">/login/error.jsp</result>
+        </action>
 		
 		<action name="HelloLocale">
     		<result>/locale/HelloLocale.jsp</result>

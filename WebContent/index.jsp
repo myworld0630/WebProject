@@ -217,6 +217,25 @@
 		<input type="button" value="圖表"  onclick="queryReport('chart')" class="input_button">
 	</fieldset>
 	</form>
-	
+	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />
+	<form id="login" action="login.action" method="post">
+	<fieldset class="fieldset_container">
+    	<table>
+        	<caption>用戶登入</caption>
+        	<tr>
+            	<td>帳號：</td>
+            	<td><input type="text" name="username"/></td>
+        	</tr>
+        	<tr>
+            	<td>密碼：</td>
+            	<td><input type="text" name="password"/></td>
+        	</tr>
+        	<tr>
+            	<td><input value="登入" type="submit"/></td>
+        	</tr>
+    </table>
+    </fieldset>
+    </form>
+
 </body>
 </html>
