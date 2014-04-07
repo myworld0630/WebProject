@@ -1,4 +1,4 @@
-package web.struts.login;
+package web.struts.spring.login;
 
 public class MyServerImpl implements MyServer {
 

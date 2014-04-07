@@ -218,6 +218,35 @@
 	</fieldset>
 	</form>
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />
+	下面的範例是用來測試導入 spring 套件的登入測試: <br /><br />
+	1. 除原本 Struts 必要的 jar 檔外，尚需要加入與 Spring 相關的 jar 檔:	<br />
+	   struts2-spring-plugin-2.2.3.1.jar	<br />
+	   spring-web-3.0.0.RELEASE.jar	<br />
+	   org.springframework.asm-3.0.2.RELEASE.jar	<br />
+	   org.springframework.brans-3.0.2.RELEASE.jar	<br />
+	   org.springframework.context-3.0.2.RELEASE.jar	<br />
+	   org.springframework.core-3.0.2.RELEASE.jar	<br />
+	   org.springframework.expression-3.0.2.RELEASE.jar	<br /><br />
+	   
+	2. 修改 /WEB-INF/web.xml，加入 	<br />
+	   &lt;context-param&gt;	<br />
+	   		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;	<br />
+	   		&lt;param-value&gt;/WEB-INF/applicationContext.xml&lt;/param-value&gt;	這行描述 spring 設定檔的檔名及位置<br />
+       &lt;/context-param&gt;	<br />
+       &lt;listener&gt;	<br />
+       		&lt;listener-class&gt;	<br />
+          		org.springframework.web.context.ContextLoaderListener	<br />
+       		&lt;/listener-class&gt;	<br />
+       &lt;/listener&gt; <br /><br />
+     
+    3. 在 WEB-INF/ 下加入 applicationContext.xml 檔案，對應到 web.xml 對於 spring 設定檔檔名及位置的描述   <br />
+	4. 修改 struts.mxl 加入 &lt;constant name="struts.objectFactory" value="spring"/&gt; <br />
+	5. 以上為設定檔的配置，要測試尚需要:	<br />
+	        新增 web.struts.spring.login Package，在其下加入 LoginAction.java，MyServer.java 及 MyServerImpl.java <br />
+	   Spring 規範需先產生 Interface 介面 xxx.java，再由 Class xxxImpl.java 來 Instance 這個物件 <br /><br />
+	6. 在WebContent下新增 login 資料夾，在裡面新增 welcome.jsp 及 error.jsp，在 index.jsp 中新增登入區塊及按鈕 <br />
+	        指定按下按鈕後對應到 login Action，在 struts.xml 中新增 login Action 的描述，登入成功導向 welcome.jsp，失敗則導向 error.jsp <br /><br />
+	
 	<form id="login" action="login.action" method="post">
 	<fieldset class="fieldset_container">
     	<table>

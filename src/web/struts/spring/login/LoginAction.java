@@ -1,4 +1,4 @@
-package web.struts.login;
+package web.struts.spring.login;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
@@ -49,11 +49,14 @@ public class LoginAction extends ActionSupport /*implements Action*/ {
 		
 		WebApplicationContext tContext = ContextLoaderListener.getCurrentWebApplicationContext();
 		ApplicationContext appContext = tContext;
+		
+		//ä¸‹é¢?™è? code å°±æ˜¯  dependency injection(DI ä¾è³´æ³¨å…¥)ï¼Œæ?è¬? DI å°±æ˜¯?©ä»¶?é? Factory Pattern ?–å?ï¼?
+		//ä»¥é?ä½ç?å¼ç¢¼ä¹‹é??„è??ˆåº¦ï¼Œspring ?é? ApplicationContext.getBean ?¹æ?å¾?Bean Factory ?–å??©ä»¶å®Œæ?ä¾è³´æ³¨å…¥
 		ms = (MyServer) appContext.getBean("MyServer");
 
 		if (ms != null) {
 			if (ms.valid(getUsername(), getPassword())) {
-				setTip("ç™»é™¸æˆåŠŸ");
+				setTip("?»é™¸?å?");
 				return "success";
 			} else {
 				return "error";
