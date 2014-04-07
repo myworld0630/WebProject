@@ -5,14 +5,14 @@
 
 	<!-- 表示 MyServer 這個 Bean 物件由 web.struts.login.MyServerImpl 處理，沒有 scope 描述表示預設 scope 是 singleton-->
 	<!-- 所謂 singleton 表示在程式裡面只有一份 MyServer 物件(記憶體空間相同)，如果 scope 設定為 prototype，表示透過依賴注入拿到的 MyServer 不是同一個物件(配置不同的記憶體空間)-->
-    <bean id="MyServer" class="web.struts.login.MyServerImpl"></bean> 
+    <bean id="MyServer" class="web.struts.spring.MyServerImpl"></bean> 
     
     <!-- 
     	下面這段 code 表示 login 物件裡有 MyServer 物件 ms，所以在產生 login 物件前，要先產生 MyServer 物件，所以使用 property 標籤表示先產生 MyServer 物件傳入 login 中
     	property name 是 login 物件中有個 MyServer 物件叫 ms，ref="MyServer" 表示要 reference bean id="MyServer" 定義來產生 MyServer 物件
     -->
     <!-- 如果要使用這段 code，LoginAction 要改成繼承 Action，目前 mark 起來是因為 LoginAction 繼承 ActionSupport
-    <bean id="login" class="web.struts.login.LoginAction" scope="prototype">
+    <bean id="login" class="web.struts.spring.LoginAction" scope="prototype">
         <property name="ms" ref="MyServer"></property>
     </bean>
     -->

@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/web/struts/spring/login/LoginAction.java=UTF-8
-encoding//src/web/struts/spring/login/MyServer.java=UTF-8
-encoding//src/web/struts/spring/login/MyServerImpl.java=UTF-8
+encoding//src/web/struts/Interceptor/LoginInterceptor.java=UTF-8
+encoding//src/web/struts/spring/LoginAction.java=UTF-8
+encoding//src/web/struts/spring/MyServer.java=UTF-8
+encoding//src/web/struts/spring/MyServerImpl.java=UTF-8
