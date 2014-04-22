@@ -43,13 +43,13 @@
 			
 			<interceptor-stack name="myStack">
 				<interceptor-ref name="json"/>
-				<interceptor-ref name="loginintercetor" />
+				<!--  <interceptor-ref name="loginintercetor" /> 為了測試方便，先將登陸攔截器 mark 起來-->
 				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
 			
 		</interceptors>
 		
-		<default-interceptor-ref name="myStack" />
+		<default-interceptor-ref name="myStack" /> <!-- 表示預設的攔截器堆疊為 myStack -->
 		
 		
 		<!-- default-action-ref 它的意思是說，如果你指定的Action沒有找到，則轉而調用該標籤定義的action，在這個例子里，就是test.action，這個標籤跟 redirect 沒有關係   -->
@@ -145,6 +145,10 @@
 		
 		<action name="chart" class="web.struts.chartdirector.HelloChartDirector" method="execute">
 			<result name="success">index.jsp</result>
+		</action>
+		
+		<action name="HelloJsonAJAX" method="HelloJsonAJAX" class="web.struts.json.HelloJSON">
+			<result type="json"><param name="root">jsonResult</param></result>	<!-- root 代表主要的回傳資料 result 為回傳主要資料的物件名稱 -->
 		</action>
 		
 	</package>

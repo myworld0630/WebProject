@@ -14,6 +14,7 @@
 		
 		$(function(){
 			trackLineEventInit();
+			hellojsonajax();
 		});
 	
 		// function query 單純用來測試第一個 Struts 範例
@@ -96,6 +97,38 @@
 				}
 			}
 		}
+		
+		//用來測試  Json Asynchrony 非同步處理機制
+		function hellojsonajax(){		
+			
+			//console.info("[execute] hellojsonajax");
+			$.ajax({
+				type:"POST", 
+				url: "HelloJsonAJAX.action",
+				data:{"myCurrent.id": "testString" }, //前端透過 POST 傳遞到後端的參數，要記得 myCurrent 對應的是後端變數的名稱，不是物件的型態!!
+				dataType: "json",
+				async: true, //預設就是 true，表示要以非同步的方式進行
+				success: function(pData){
+					var tAry = eval("(" + pData + ")"); //eval() 將 JSON 字串轉換成 JavaScript 可以處理的物件 
+					//console.info(tAry.myList); // 觀察轉換後 tAry 的物件內容
+					populateDropdownKeyValue($("#dropdownlist"),tAry.myList);
+				},
+				error : function(){
+					//console.info("false");
+				}
+			});
+		}
+		
+		//動態把內容填入下拉式選單，為了配合 Json 測試而撰寫
+		function populateDropdownKeyValue(select, data) {
+			if(select !=null || typeof select!="undefined"){
+				select.empty();
+				$.each(data, function(id, option) {
+					select.append($('<option></option>\n').val(option.key).html(option.value));
+				});
+			}
+		}
+		
 	</script>
 </head>
 <body>
@@ -235,7 +268,7 @@
        &lt;/context-param&gt;	<br />
        &lt;listener&gt;	<br />
        		&lt;listener-class&gt;	<br />
-          		org.springframework.web.context.ContextLoaderListener	<br />
+          		org.springframework.web.context.ContextLoaderListener	//ContextLoaderListener implements ServletContextListener<br />
        		&lt;/listener-class&gt;	<br />
        &lt;/listener&gt; <br /><br />
      
@@ -265,6 +298,23 @@
     </table>
     </fieldset>
     </form>
+	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />
+	下面的範例說明 Struts JSON interceptor 的用途，主要是用來處理一些非同步(Asynchrony)網頁更新的案例: <br /><br />
+	<select id='dropdownlist'></select> : 會延遲 5 秒取得內容的下拉式選單<br /><br />
+	
+	新增一個下拉式選單， id="dropdownlist"，利用 hellojsonajax javascript 函示，在函示裡面使用 jquery.ajax 方法進行網頁非同步處理，<br />
+	hellojsonajax 中呼叫 HelloJsonAJAX.action，HelloJsonAJAX.action 需要依照 struts.xml 中定義呼叫後端的 HelloJSON Class 中的 <br />
+	HelloJsonAJAX method，在 HelloJsonAJAX() 中故意使用 Thread.sleep(5000)延遲 5 秒回傳，讓 dropdownlist 的選單內容完 5 秒取得，如果改成
+	同步方式取得選單內容(可將 jquery.ajax 中的 async 改為 false)，會發現整個網頁中的其他內容也會一起延遲 5 秒才能秀出來，這就是為什麼要使用<br />
+	非同步寫法的原因，因為有時候僅是部分的內容延遲，所以只需要再針對局部的網頁內容更新即可，這也就是非同步寫法的精神，也就是 AJAX <br /><br />
+	
+	而 AJAX 前端與後端溝通則通常是使用 javascript 來處理，而後端的回傳值型態通常會使用 JSON 格式，JSON 也是一個 String 物件，前端取得 JSON String 後，<br />
+	為了方便讓 JavaScript 處理，會使用 eval() 函式將 JSON String 拆解組合成 JavaScript 物件以方便使用<br /><br />
+	
+	而在 Struts2 中，可加入 struts-json-plugin.jar 檔進行整合，導入這個 lib 後，需要在 struts.xml 檔案中定義 JSON 的 result-types: <br />
+ 	&lt;result-types&gt;&lt;result-type name="json"   class="org.apache.struts2.json.JSONResult"/&gt; &lt;/result-types&gt;<br />
+ 	並且定義對於 JSON 各式的攔截器，詳情請看 struts.xml 中的定義 <br /><br />
+	
 
 </body>
 </html>
