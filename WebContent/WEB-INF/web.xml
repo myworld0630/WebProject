@@ -41,7 +41,8 @@
   </filter-mapping>
   
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+  	<welcome-file>index.jsp</welcome-file>
+    <!-- <welcome-file>index.action</welcome-file> 將初始頁面導向 index.action 同時 struts.xml 加入  <default-action-ref name="index" /> 即可讓預設 access 到 index.action 而不是 index.jsp --> 
   </welcome-file-list>
   
 </web-app>

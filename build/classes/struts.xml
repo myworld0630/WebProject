@@ -52,8 +52,8 @@
 		<default-interceptor-ref name="myStack" /> <!-- 表示預設的攔截器堆疊為 myStack -->
 		
 		
-		<!-- default-action-ref 它的意思是說，如果你指定的Action沒有找到，則轉而調用該標籤定義的action，在這個例子里，就是test.action，這個標籤跟 redirect 沒有關係   -->
-		<!-- <default-action-ref name="test" /> 影響 debug 的直覺，先 mark-->
+		<!-- default-action-ref 它的意思是說，如果你指定的Action沒有找到，則轉而調用該標籤定義的action，在這個例子里，就是index.action，這個標籤跟 redirect 沒有關係   -->
+		<!-- <default-action-ref name="index" /> 影響 debug 的直覺，先 mark-->
 		
 		<!-- 定義在<action>元素裡面的<result>可以稱之為局部<result>，除此之外我們還可以定義全域<result>，全域<result>會被多個<action>所共享 -->
 		<global-results>
