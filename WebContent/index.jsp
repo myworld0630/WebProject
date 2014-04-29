@@ -40,6 +40,8 @@
 				$("#form0").attr("action", "pdf.action").submit();
 			else if(actionType =="chart")
 				$("#form1").attr("action", "chart.action").submit();
+			else if(actionType =="windrosechart")
+				$("#form2").attr("action", "windrosechart.action").submit();
 		}		
 		
 		function trackLineEventInit(){
@@ -248,6 +250,21 @@
 		</s:if>
 		<br />
 		<input type="button" value="圖表"  onclick="queryReport('chart')" class="input_button">
+	</fieldset>
+	</form>
+	
+	<br />
+	新增風花圖測試:
+	<br />
+	
+	<form name="form2" id="form2" method="post">
+	
+	<fieldset class="fieldset_container">
+		<s:if test="#request.imgWindRoseChart!=null" >
+			<s:property value="imgWindRoseChart" escapeHtml="false" /> <!-- 加 escapeHtml="false" 圖才會出現-->
+		</s:if>
+		<br />
+		<input type="button" value="風花圖"  onclick="queryReport('windrosechart')" class="input_button">
 	</fieldset>
 	</form>
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />

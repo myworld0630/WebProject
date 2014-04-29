@@ -147,6 +147,10 @@
 			<result name="success">index.jsp</result>
 		</action>
 		
+		<action name="windrosechart" class="web.struts.chartdirector.HelloWindRoesChart" method="execute">
+			<result name="success">index.jsp</result>
+		</action>
+		
 		<action name="HelloJsonAJAX" method="HelloJsonAJAX" class="web.struts.json.HelloJSON">
 			<result type="json"><param name="root">jsonResult</param></result>	<!-- root 代表主要的回傳資料 result 為回傳主要資料的物件名稱 -->
 		</action>
